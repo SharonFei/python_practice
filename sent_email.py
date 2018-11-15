@@ -14,12 +14,6 @@ smtp_server = input('SMTP server: ')
 msgRoot = MIMEMultipart('related')
 
 
-'''
-from_addr = matchafei@163.com
-password = xingfu135###
-to_addr = matchafei@163.com
-smtp_server = smtp.163.com
-'''
 
 # 添加一个MIMEmultipart类，处理正文及附件
 msg = MIMEMultipart()
