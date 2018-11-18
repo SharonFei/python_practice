@@ -15,9 +15,9 @@ msgRoot = MIMEMultipart('related')
 
 
 '''
-from_addr = matchafei@163.com
-password = xingfu135###
-to_addr = matchafei@163.com
+from_addr = 
+password = 
+to_addr = 
 smtp_server = smtp.163.com
 '''
 
