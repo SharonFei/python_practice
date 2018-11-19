@@ -89,6 +89,12 @@ def print_info(msg, indent=0):
         else:
             print('%sAttachment: %s' % ('  ' * indent, content_type))
 
+        
+if __name__ == '__main__':
+    decode_str(s)
+    guess_charset(msg)
+    print_info(msg, indent=0)
+
 
 
 
