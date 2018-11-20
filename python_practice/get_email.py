@@ -1,10 +1,9 @@
-# !/usr/bin/python3
+# !/usr/bin/python2
 # -*- coding: UTF-8 -*-
 import poplib
 from email.parser import Parser
 from email.header import decode_header
 from email.utils import parseaddr
-
 
 # 输入邮件地址, 口令和POP3服务器地址:
 email = input('Email: ')
@@ -19,11 +18,16 @@ server.set_debuglevel(1)
 print(server.getwelcome().decode('utf-8'))
 
 # 身份认证:
-server.user(email)
-server.pass_(password)
+try:
+        server.user(email)
+        server.pass_(password)
+except poplib.error_proto as e:
+        print("Login failed:", e)
+
 
 # stat()返回邮件数量和占用空间:
-print('Messages: %s. Size: %s' % server.stat())
+status = server.stat()
+print("Mailbox has %d messages for a total of %d bytes" % (status[0], status[1]))
 # list()获取服务器上的邮件列表:
 resp, mails, octets = server.list()
 # 可以查看返回的列表类似[b'1 82923', b'2 2184', ...]
@@ -42,7 +46,7 @@ msg = Parser().parsestr(msg_content)
 # 可以根据邮件索引号直接从服务器删除邮件:
 # server.dele(index)
 # 关闭连接:
-server.quit()
+#server.quit()
 
 
 def decode_str(s):
@@ -67,7 +71,7 @@ def print_info(msg, indent=0):
         for header in ['From', 'To', 'Subject']:
             value = msg.get(header, '')
             if value:
-                if header=='Subject':
+                if header == 'Subject':
                     value = decode_str(value)
                 else:
                     hdr, addr = parseaddr(value)
@@ -82,7 +86,7 @@ def print_info(msg, indent=0):
             print_info(part, indent + 1)
     else:
         content_type = msg.get_content_type()
-        if content_type == 'text/plain' or content_type=='text/html':
+        if content_type == 'text/plain' or content_type == 'text/html':
             content = msg.get_payload(decode=True)
             charset = guess_charset(msg)
             if charset:
@@ -91,13 +95,8 @@ def print_info(msg, indent=0):
         else:
             print('%sAttachment: %s' % ('  ' * indent, content_type))
 
-        
+
 if __name__ == '__main__':
     decode_str(s)
     guess_charset(msg)
     print_info(msg, indent=0)
-
-
-
-
-
