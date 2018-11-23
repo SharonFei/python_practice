@@ -5,7 +5,7 @@ import re
 import xlwt
 
 
-def get_file(file_name):
+def get_data(file_name):
     action = []
     action_time = []
     with open(file_name, 'r', encoding='utf-8') as file_name:
@@ -65,7 +65,7 @@ if __name__ == '__main__':
     file_name = path + '\case_log.txt'
     sheet_name = 'action_avg_time'
     excel_name = path + '\ action_log.xls'
-    action, action_time = get_file(file_name)
+    action, action_time = get_data(file_name)
     action_info = cal_time(action, action_time)
     write_to_excel(sheet_name, action_info, excel_name)
 
