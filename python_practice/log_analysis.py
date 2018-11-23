@@ -12,7 +12,7 @@ def get_data(file_name):
         lines = file_name.readlines()
         for line in lines:
             info = re.match(
-                r'^[0-9\:\s\/\,]{21}ACTION\s(\w{1,50})\s\[finished\][\w\:\s\=]{1,50}\=([0-9\.]{1,10})sec', line)
+                r'^[0-9\/\s\:\,]{21}ACTION\s(\w{1,50})\s\[finished\][\w\s\=]{1,50}\=([0-9\.]{1,10})sec', line)
             if info:
                 action.append(info.group(1))
                 action_time.append(info.group(2))
@@ -39,9 +39,9 @@ def cal_time(action, action_time):
     return action_data
 
 
-def write_to_excel(sheet_name, action_info, excel_name):
+def write_to_excel(sheet_name,action_info, excel_name):
     excel = xlwt.Workbook(encoding="ascii")
-    table = excel.add_sheet(sheet_name, True)
+    table = excel.add_sheet(sheet_name)
     row = 0
     for item in action_info:
         column = 0
