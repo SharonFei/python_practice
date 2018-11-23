@@ -1,5 +1,6 @@
 # !/usr/bin/python2
 # -*- coding: UTF-8 -*-
+import os
 import re
 import xlwt
 
@@ -8,7 +9,7 @@ def get_file(file_name):
     action = []
     action_time = []
     with open(file_name, 'r', encoding='utf-8') as file_name:
-        lines = file_name.readlines()  # 带缓存的文件读取
+        lines = file_name.readlines()
         for line in lines:
             info = re.match(
                 r'^[0-9\:\s\/\,]{21}ACTION\s(\w{1,50})\s\[finished\][\w\:\s\=]{1,50}\=([0-9\.]{1,10})sec', line)
@@ -22,7 +23,7 @@ def get_file(file_name):
 def cal_time(action, action_time):
     # 查找集合中的重复元素
     all_action = set(action)
-    action_data = [['run_num', 'action_name', 'avg_time'], ]
+    action_data = [['run_num', 'action_name', 'avg_time']]
     for action_name in all_action:
         i = 0
         run_num = 0
@@ -32,7 +33,7 @@ def cal_time(action, action_time):
                 run_num = run_num + 1
                 avg_time = avg_time + float(action_time[i])
             i = i + 1
-        avg_time = float('%.3f' % float(avg_time/run_num))
+        avg_time = float('%.2f' % float(avg_time/run_num))
         action_data.append([run_num, action_name, avg_time])
     action_data = action_data[0:1] + sorted(action_data[1:len(action_data)])
     return action_data
@@ -60,9 +61,10 @@ def write_to_excel(sheet_name, action_info, excel_name):
 
 
 if __name__ == '__main__':
-    file_name = 'D:\python_practice\case_log.txt'
+    path = os.getcwd()
+    file_name = path + '\case_log.txt'
     sheet_name = 'action_avg_time'
-    excel_name = 'D:\python_practice\ action_log.xls'
+    excel_name = path + '\ action_log.xls'
     action, action_time = get_file(file_name)
     action_info = cal_time(action, action_time)
     write_to_excel(sheet_name, action_info, excel_name)
