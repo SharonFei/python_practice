@@ -8,7 +8,8 @@ from email.utils import parseaddr
 # 输入邮件地址, 口令和POP3服务器地址:
 email = input('Email: ')
 password = input('Password: ')
-pop3_server = input('POP3 server: ')
+pop3_server = input('pop3_server')
+# pop.263xmail.com
 
 
 # 连接到POP3服务器:
@@ -99,5 +100,8 @@ def print_info(msg, indent=0):
             print('%sText: %s' % ('  ' * indent, content + '...'))
         else:
             print('%sAttachment: %s' % ('  ' * indent, content_type))
+
+
+print_info(msg)
 
 
