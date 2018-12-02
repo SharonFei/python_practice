@@ -61,7 +61,7 @@ def write_to_excel(sheet_name,action_info, excel_name):
 
 
 if __name__ == '__main__':
-    path = os.getcwd()
+    path = os.getcwd() #返回当前工作目录
     file_name = path + '\case_log.txt'
     sheet_name = 'action_avg_time'
     excel_name = path + '\ action_log.xls'
